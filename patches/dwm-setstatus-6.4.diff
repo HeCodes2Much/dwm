@@ -1,0 +1,45 @@
+diff --git a/config.def.h b/config.def.h
+index 417bc22..c575860 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -60,7 +60,7 @@ static const Layout layouts[] = {
+ };
+ 
+ /* key definitions */
+-#define MODKEY Mod1Mask
++#define MODKEY Mod4Mask
+ #define TAGKEYS(KEY,TAG) \
+     { MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
+     { MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
+@@ -73,7 +73,7 @@ static const Layout layouts[] = {
+ /* commands */
+ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
+ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+-static const char *termcmd[]  = { "st", NULL };
++static const char *termcmd[]  = { "kitty", NULL };
+ 
+ static const Key keys[] = {
+ 	/* modifier                     key        function        argument */
+diff --git a/dwm.c b/dwm.c
+index 5b0db65..5934263 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -3073,12 +3073,17 @@ main(int argc, char *argv[])
+ {
+ 	if (argc == 2 && !strcmp("-v", argv[1]))
+ 		die("dwm-"VERSION);
+-	else if (argc != 1)
++	else if (argc != 1 && strcmp("-s", argv[1]))
+ 		die("usage: dwm [-v]");
+ 	if (!setlocale(LC_CTYPE, "") || !XSupportsLocale())
+ 		fputs("warning: no locale support\n", stderr);
+ 	if (!(dpy = XOpenDisplay(NULL)))
+ 		die("dwm: cannot open display");
++  if (argc > 1 && !strcmp("-s", argv[1])) {
++		XStoreName(dpy, RootWindow(dpy, DefaultScreen(dpy)), argv[2]);
++		XCloseDisplay(dpy);
++		return 0;
++	}
+ 	checkotherwm();
+ 	setup();
+ #ifdef __OpenBSD__
