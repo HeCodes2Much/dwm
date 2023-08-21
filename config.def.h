@@ -1,5 +1,13 @@
 /* See LICENSE file for copyright and license details. */
 
+/* alt-tab configuration */
+static const unsigned int tabModKey       = 0x40;    /* if this key is hold the alt-tab functionality stays acitve. This key must be the same as key that is used to active functin altTabStart `*/
+static const unsigned int tabCycleKey     = 0x17;    /* if this key is hit the alt-tab program moves one position forward in clients stack. This key must be the same as key that is used to active functin altTabStart */
+static const unsigned int tabPosY         = 1;    /* tab position on Y axis, 0 = bottom, 1 = center, 2 = top */
+static const unsigned int tabPosX         = 1;    /* tab position on X axis, 0 = left, 1 = center, 2 = right */
+static const unsigned int maxWTab         = 600;    /* tab menu width */
+static const unsigned int maxHTab         = 200;    /* tab menu height */
+
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -44,19 +52,19 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
 static const Layout layouts[] = {
-	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ "[M]",      monocle },
+    /* symbol     arrange function */
+    { "[]=",      tile },    /* first entry is default */
+    { "><>",      NULL },    /* no layout function means floating behavior */
+    { "[M]",      monocle },
 };
 
 /* key definitions */
 #define MODKEY Mod1Mask
 #define TAGKEYS(KEY,TAG) \
-	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
+    { MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
+    { MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
+    { MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
+    { MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
